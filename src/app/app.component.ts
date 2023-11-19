@@ -10,4 +10,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+ loadedFeater = "recipe";
+
+  onSelect(feature: string) {
+this.loadedFeater = feature;
+  }
 }
