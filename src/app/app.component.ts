@@ -12,7 +12,7 @@ import { Component } from '@angular/core';
 export class AppComponent {
  loadedFeater = "recipe";
 
-  onSelect(feature: string) {
+  onNavigate(feature: string) {
 this.loadedFeater = feature;
   }
 }
