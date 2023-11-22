@@ -8,17 +8,15 @@ import {Recipe} from "../recipe.model";
 })
 export class RecipeListComponent implements OnInit {
   recipes: Recipe[] = [
-    new Recipe('Test resipe', 'Description of each recipe',
+    new Recipe('First Test recipe', 'Description of each recipe',
       'https://therecipecritic.com/wp-content/uploads/2020/03/Poke-Bowls-2-1.jpg'
       ),
-    new Recipe('Test resipe', 'Description of each recipe',
+    new Recipe('Second Test recipe', 'Description of each recipe',
       'https://therecipecritic.com/wp-content/uploads/2020/03/Poke-Bowls-2-1.jpg'
     )
   ]
 
-  constructor() {
-  }
+  constructor() {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 }

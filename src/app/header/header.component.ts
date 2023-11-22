@@ -11,6 +11,6 @@ export class HeaderComponent {
  @Output() selectedFeature = new EventEmitter<string>();
 
   onChoose(feature: string) {
-   this.selectedFeature.emit(feature);
+   this.selectedFeature.emit(feature);// which is "recipe"/"shopping-list"
   }
 }
