@@ -4,18 +4,17 @@
   </div>
 </div>
 <hr>
-<div class="row">
+<div class="row" >
   <div class="col-xs-12">
-   <app-recipe-item  *ngFor="let item of recipes"
-                     [recipe]="item"></app-recipe-item>
+    <app-recipe-item *ngFor="let item of recipes"
+                     [recipe]="item"
+                     (recipeSelected) ="onRecipeSelected(item)"
+     ></app-recipe-item>
   </div>
 </div>
 
 
-
 //recipe here - is recipe property in component
-
-
 
 
 <!--
