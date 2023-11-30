@@ -8,17 +8,17 @@ import {Recipe} from "../../recipe.model";
 })
 export class RecipeItemComponent {
    //@Input() recipe: { description: string, name: string, imagePath: string }
-  @Input() recipe: Recipe
 
+  @Input() recipe: Recipe
   @Output() recipeSelected = new EventEmitter();
 
 
   constructor() {}
 
+  ngOnInit() {}
+
   onSelected() {
     this.recipeSelected.emit();
   }
-
-  ngOnInit() {}
 
 }
