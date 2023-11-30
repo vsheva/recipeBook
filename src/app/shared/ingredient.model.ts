@@ -8,6 +8,21 @@
 //   }
 // }
 
+
+/*
+export class Ingredient {
+
+  name:string;
+  amount:number;
+
+  constructor(public nm: string, public amnt: number) {
+    this.name = nm;
+    this.amount = amnt;
+  }
+}
+*/
+
+
 export class Ingredient {
 
   constructor(public name: string, public amount: number) {
