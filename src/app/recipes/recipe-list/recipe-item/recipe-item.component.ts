@@ -10,6 +10,9 @@ export class RecipeItemComponent {
    //@Input() recipe: { description: string, name: string, imagePath: string }
 
   @Input() recipe: Recipe
+  @Input() rindex: number
 
-  ngOnInit() {}
+  ngOnInit() {
+
+  }
 }
