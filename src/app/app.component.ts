@@ -13,9 +13,10 @@ import {ShoppingListService} from "./shopping-list/shoppig-list.service";
   providers: [ShoppingListService]
 })
 export class AppComponent {
- loadedFeater = "recipe";
+
+/* loadedFeater = "recipe";
 
   onNavigate(feature: string) {
 this.loadedFeater = feature;
-  }
+  }*/
 }
