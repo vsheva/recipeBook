@@ -46,5 +46,10 @@ export class ShoppingListService {
     this.ingredientChanged.next(this.ingredients.slice()) //emit apdated ingredient from previous lane - simply change value by click update
   }
 
+  deleteIngredient(index: number) {
+    this.ingredients.splice(index, 1);
+    this.ingredientChanged.next(this.ingredients.slice())
+  }
+
 
 }
