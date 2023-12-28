@@ -4,10 +4,10 @@ import {Ingredient} from "../shared/ingredient.model";
 
 @Injectable()
 
-export class ShoppingListService{
+export class ShoppingListService {
 
-  ingredientChanged= new Subject<Ingredient[]>();
-  startedEditing= new Subject<number>(); //!!! Subject
+  ingredientChanged = new Subject<Ingredient[]>();
+  startedEditing = new Subject<number>(); //!!! Subject
 
   ingredients: Ingredient[] = [
     new Ingredient("Potatoes", 5),
@@ -15,23 +15,23 @@ export class ShoppingListService{
     new Ingredient("Meat", 4),
   ]
 
-  getIngredients(){
+  getIngredients() {
     return this.ingredients.slice()
   }
 
-  getIngredient(index:number) {
+  //get index by click
+  getIngredient(index: number) {
     return this.ingredients[index]
   }
 
 
-
-  addIngredient(ingredient:Ingredient) {
+  addIngredient(ingredient: Ingredient) {
     this.ingredients.push(ingredient);
     //this.ingredientChanged.emit(this.ingredients.slice())
     this.ingredientChanged.next(this.ingredients.slice()) //!!!
   }
 
-  addIngredients(ingredients:Ingredient[]) {
+  addIngredients(ingredients: Ingredient[]) {
     // for (let ingredient of ingredients) {
     //   this.addIngredient(ingredient)
     // }
@@ -39,5 +39,12 @@ export class ShoppingListService{
     this.ingredients.push(...ingredients);
     this.ingredientChanged.next(this.ingredients.slice())
   }
+
+
+  updateIngredient(index: number, myNewIngredient: Ingredient) {
+    this.ingredients[index] = myNewIngredient; ////get the one ingredient, we are looking for by index
+    this.ingredientChanged.next(this.ingredients.slice()) //emit apdated ingredient from previous lane - simply change value by click update
+  }
+
 
 }

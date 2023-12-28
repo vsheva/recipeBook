@@ -24,7 +24,16 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
     //console.log("form", form.value) //{name: "..", amount: ".."}
     //const value= form.value;
     const newIngredient = new Ingredient(form.value.name, form.value.amount);
-    this.shoppingListService.addIngredient(newIngredient)
+
+    //update item -if edit mode
+
+    if(this.editMode) {
+      this.shoppingListService.updateIngredient(this.editedItemIndex,  newIngredient)
+    } else {
+      this.shoppingListService.addIngredient(newIngredient)
+    }
+
+
   }
 
   //do listening the subject: subscribe to startedEditing subject
@@ -60,3 +69,4 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 }
+
