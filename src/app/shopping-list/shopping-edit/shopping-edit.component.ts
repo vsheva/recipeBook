@@ -20,19 +20,20 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
   constructor(private shoppingListService: ShoppingListService) {
   }
 
-  onAddIngredient(form: NgForm) {
+  onSubmit(form: NgForm) {
     //console.log("form", form.value) //{name: "..", amount: ".."}
     //const value= form.value;
     const newIngredient = new Ingredient(form.value.name, form.value.amount);
 
     //update item -if edit mode
 
-    if(this.editMode) {
-      this.shoppingListService.updateIngredient(this.editedItemIndex,  newIngredient)
+    if (this.editMode) {
+      this.shoppingListService.updateIngredient(this.editedItemIndex, newIngredient)
     } else {
       this.shoppingListService.addIngredient(newIngredient)
     }
-
+    this.editMode=false;
+    this.slForm.reset();
 
   }
 
@@ -40,7 +41,6 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.subscription =
       this.shoppingListService.startedEditing.subscribe(
-
         (index: number) => {
           this.editMode = true;
           this.editedItemIndex = index;
@@ -64,6 +64,13 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
   //3. в subscribe - вызываем массив обьектов с кликнутым индексом (то что мы нажали) ---> что возврашает нам нужный обьект {name:"Potatoes", amount:0},
   //4.  заселяем форму name и amount (что сверху), куда записываем то, на что кликнули снизу (Например, Potatoes(5) --- в Name идет Potatoes, в Amount идет 5
   //5. форма заселена данными снизу
+
+
+  onClear() {
+    this.editMode=false;
+    this.slForm.reset();
+  }
+
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
