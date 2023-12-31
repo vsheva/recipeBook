@@ -59,9 +59,12 @@ export class RecipeService {
   updateRecipe(index: number, newRecipe: Recipe) {
     this.recipes[index] = newRecipe;
     this.recipeChanged.next(this.recipes.slice()) //!!!!! передаем recipes через субьект в компонет recipe-list через переменную recipeChanged, точнее копию его !!!
-
   }
 
+  deleteRecipe(index: number) {
+    this.recipes.splice(index, 1);
+    this.recipeChanged.next(this.recipes.slice()) //!!! отправляем удаление в компонент и испускаем событие в recipe-detail component.html и следовательно ...recipe-detail.componet.ts.
+  }
 
 }
 

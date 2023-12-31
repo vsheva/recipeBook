@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Params} from "@angular/router";
+import {ActivatedRoute, Params, Router} from "@angular/router";
 import {FormArray, FormControl, FormGroup, Validators} from "@angular/forms";
 import {RecipeService} from "../recipe.service";
 import {Recipe} from "../recipe.model";
@@ -15,7 +15,8 @@ export class RecipeEditComponent {
   recipeForm: FormGroup;
 
   constructor(private route: ActivatedRoute,
-              private recipeService: RecipeService) {
+              private recipeService: RecipeService,
+              private router: Router) {
   }
 
   ngOnInit() {
@@ -32,18 +33,19 @@ export class RecipeEditComponent {
     //value берем внизу из формы
 
     //since value of the form has exactly format of  recipe.model and same names
-   /** const newRecipe = new Recipe(
-      this.recipeForm.value["name"],
-      this.recipeForm.value['imagePath'],
-      this.recipeForm.value['description'],
-      this.recipeForm.value['ingredients'],
-      )*/
+    /** const newRecipe = new Recipe(
+     this.recipeForm.value["name"],
+     this.recipeForm.value['imagePath'],
+     this.recipeForm.value['description'],
+     this.recipeForm.value['ingredients'],
+     )*/
 
-    if(this.editMode) {
+    if (this.editMode) {
       this.recipeService.updateRecipe(this.id, this.recipeForm.value);
     } else {
       this.recipeService.addRecipe(this.recipeForm.value);
     }
+    this.onCancel()//the same for submit button
 
   }
 
@@ -61,6 +63,10 @@ export class RecipeEditComponent {
         Validators.pattern(/^[1-9]+[0-9]*$/)
       ])
     })) //!!!
+  }
+
+  onCancel() {
+    this.router.navigate(["../"], {relativeTo: this.route}); //navigating up for 1 level; we neet to tell what our curent route is
   }
 
   private initForm() {
@@ -100,7 +106,7 @@ export class RecipeEditComponent {
       'description': new FormControl(recipeDescription, Validators.required), //[formControlName] = "'description'"
       'ingredients': recipeIngredients //[formArrayName]="'ingredients'"
     })
-    console.log(" this.recipeForm ",  this.recipeForm )// FormGroup{controls: {name: FormControl}, value:{"name":"", "imagePath":"", "description":"", "ingredients":[]} }
+    console.log(" this.recipeForm ", this.recipeForm)// FormGroup{controls: {name: FormControl}, value:{"name":"", "imagePath":"", "description":"", "ingredients":[]} }
 
   }
 
