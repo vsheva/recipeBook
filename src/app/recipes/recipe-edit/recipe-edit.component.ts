@@ -65,6 +65,11 @@ export class RecipeEditComponent {
     })) //!!!
   }
 
+  onDeleteIngredient(index: number) {
+    (<FormArray>this.recipeForm.get("ingredients")).removeAt(index); //!!
+    //(<FormArray>this.recipeForm.get("ingredients")).clear(); //!!
+  }
+
   onCancel() {
     this.router.navigate(["../"], {relativeTo: this.route}); //navigating up for 1 level; we neet to tell what our curent route is
   }
