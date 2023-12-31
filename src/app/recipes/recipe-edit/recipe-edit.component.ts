@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Params} from "@angular/router";
 import {FormArray, FormControl, FormGroup, Validators} from "@angular/forms";
 import {RecipeService} from "../recipe.service";
+import {Recipe} from "../recipe.model";
 
 @Component({
   selector: 'app-recipe-edit',
@@ -27,7 +28,23 @@ export class RecipeEditComponent {
   }
 
   onSubmit() {
-    console.log("recipeForm", this.recipeForm);
+    //console.log("recipeForm", this.recipeForm);
+    //value берем внизу из формы
+
+    //since value of the form has exactly format of  recipe.model and same names
+   /** const newRecipe = new Recipe(
+      this.recipeForm.value["name"],
+      this.recipeForm.value['imagePath'],
+      this.recipeForm.value['description'],
+      this.recipeForm.value['ingredients'],
+      )*/
+
+    if(this.editMode) {
+      this.recipeService.updateRecipe(this.id, this.recipeForm.value);
+    } else {
+      this.recipeService.addRecipe(this.recipeForm.value);
+    }
+
   }
 
   //fix
@@ -83,6 +100,8 @@ export class RecipeEditComponent {
       'description': new FormControl(recipeDescription, Validators.required), //[formControlName] = "'description'"
       'ingredients': recipeIngredients //[formArrayName]="'ingredients'"
     })
+    console.log(" this.recipeForm ",  this.recipeForm )// FormGroup{controls: {name: FormControl}, value:{"name":"", "imagePath":"", "description":"", "ingredients":[]} }
+
   }
 
 }

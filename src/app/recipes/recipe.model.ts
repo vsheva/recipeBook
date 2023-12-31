@@ -7,10 +7,10 @@ export class Recipe {
   public ingredients: Ingredient[];
 
   //assign arguments, we receive, to the properties of our object- our class
-  constructor(name:string, desc:string, imagePath:string, ingredients: Ingredient[]) {
+  constructor(name:string, desc:string, imagePth:string, ingredts: Ingredient[]) {
     this.name=name;
     this.description=desc;
-    this.imagePath=imagePath;
-    this.ingredients= ingredients
+    this.imagePath=imagePth;
+    this.ingredients= ingredts
   }
 }
