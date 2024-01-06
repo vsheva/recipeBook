@@ -87,7 +87,7 @@ export class RecipeEditComponent {
       recipeImagePath = recipe.imagePath;
       recipeDescription = recipe.description;
 
-      console.log("recipe", recipe)//{"name":"Burger", "description": "Delicious", "imagePath": "https//..", "ingredients":[{name:"french", amount:2}, {name:"souce", amount:"1"}]}
+      //console.log("recipe", recipe)//{"name":"Burger", "description": "Delicious", "imagePath": "https//..", "ingredients":[{name:"french", amount:2}, {name:"souce", amount:"1"}]}
 
 
       if (recipe['ingredients']) {
