@@ -1,11 +1,11 @@
 import {Injectable} from "@angular/core";
-import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot} from "@angular/router";
+import {ActivatedRouteSnapshot, ResolveFn, RouterStateSnapshot} from "@angular/router";
 import {Recipe} from "./recipe.model";
 import {DataStorageService} from "../shared/data-storage.service";
 import {RecipeService} from "./recipe.service";
 
 @Injectable({providedIn: "root"}) //!!!if inject service here
-export class RecipesResolverService implements Resolve<Recipe[]> {
+export class RecipesResolverService implements ResolveFn<Recipe[]> {
 
   constructor(private dataStorageService: DataStorageService,
               private recipeService: RecipeService
