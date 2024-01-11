@@ -37,6 +37,11 @@ export class RecipeService {
 
   constructor(private shoppingListService: ShoppingListService) {
   }
+  setRecipes(recipes: Recipe[]) {
+    this.recipes = recipes;
+    this.recipeChanged.next(this.recipes.slice()) //!!!!! передаем recipes через субьект в компонет recipe-list через переменную recipeChanged, точнее копию его !!!
+
+  }
 
   getRecipes() {
     return this.recipes.slice();
