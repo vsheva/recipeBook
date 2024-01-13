@@ -14,9 +14,9 @@ export class AuthComponent {
     this.isLogin= !this.isLogin
   }
 
-  onSubmit(form: NgForm) {
-    console.log(form.value);
-    form.reset();
+  onSubmit(forma: NgForm) {
+    console.log(forma.value);
+    forma.reset();
   }
 
 }
