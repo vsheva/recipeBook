@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import * as http from "http";
+
 import {HttpClient} from "@angular/common/http";
 
 interface AuthResponse{
