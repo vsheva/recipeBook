@@ -11,6 +11,7 @@ import {AuthService} from "./auth.service";
 export class AuthComponent {
   isLogin = true;
   isLoading = false;
+  error: string = null;
 
   constructor(private authService: AuthService) {
   }
@@ -36,11 +37,14 @@ export class AuthComponent {
             console.log(resData)
             this.isLoading = false;
           },
-          error => {
-            console.log(error)
+          errorMessage => {//we subscribe to the observable  -that  moved logic to service in pipe (в пайп мы чуть подстраиваем данные)
+            console.log(errorMessage);
+            this.error = errorMessage;
             this.isLoading = false;
           })
     }
     forma.reset();
   }
 }
+
+//!!!we suscribe to observable (that is message) -> and throw it through throwError(errorMessage)
