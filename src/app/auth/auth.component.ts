@@ -6,12 +6,12 @@ import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-auth',
-  templateUrl: './auth.component.html',
-  //styleUrls: ['./auth.component.css']
+  templateUrl: './auth.component.html'
 })
 
+
 export class AuthComponent {
-  isLogin = true;
+  isLoginMode = true;
   isLoading = false;
   error: string = null;
 
@@ -19,7 +19,7 @@ export class AuthComponent {
   }
 
   onSwitchMode() {
-    this.isLogin = !this.isLogin
+    this.isLoginMode = !this.isLoginMode
   }
 
   onSubmit(form: NgForm) {
@@ -28,19 +28,19 @@ export class AuthComponent {
     }
     const email = form.value.email;
     const password = form.value.password;
-    let authObservable: Observable<AuthResponseData>;
+    let authObservable: Observable<AuthResponseData>; //from type
 
     this.isLoading = true;
-    if (this.isLogin) {
+    if (this.isLoginMode) {
       authObservable = this.authService.login(email, password)
     } else {
       authObservable = this.authService.signup(email, password)
     }
-
+//subscribe
     authObservable.subscribe(resData => {
         console.log(resData)
         this.isLoading = false;
-        this.router.navigate(["/recipes"]);
+        this.router.navigate(["/recipes"]);//click button,loging done, routing
       },
       errorMessage => {
         console.log(errorMessage);
@@ -55,6 +55,7 @@ export class AuthComponent {
 /*
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 
 import { AuthService, AuthResponseData } from './auth.service';
@@ -68,7 +69,7 @@ export class AuthComponent {
   isLoading = false;
   error: string = null;
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   onSwitchMode() {
     this.isLoginMode = !this.isLoginMode;
@@ -95,6 +96,7 @@ export class AuthComponent {
       resData => {
         console.log(resData);
         this.isLoading = false;
+        this.router.navigate(['/recipes']);
       },
       errorMessage => {
         console.log(errorMessage);
@@ -106,5 +108,7 @@ export class AuthComponent {
     form.reset();
   }
 }
+
 */
+
 

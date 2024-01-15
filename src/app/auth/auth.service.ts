@@ -7,12 +7,12 @@ import {User} from "./user.model";
 
 export interface AuthResponseData {
   kind: string;
-  idToken: string,
-  email: string,
-  refreshToken: string,
-  expiresIn: string,
-  localId: string,
-  registered?: boolean
+  idToken: string;
+  email: string;
+  refreshToken: string;
+  expiresIn: string;
+  localId: string;
+  registered?: boolean;
 }
 
 
@@ -20,10 +20,9 @@ export interface AuthResponseData {
 
 export class AuthService {
   user = new BehaviorSubject<User>(null);
+  //token: string= null
 
-
-  constructor(private http: HttpClient) {
-  }
+  constructor(private http: HttpClient) {}
 
 //pipe(catchError((errorRes) => {  //move logic form auth.component.ts to this observable (в пайп мы чуть подстраиваем данные)
 
@@ -32,7 +31,8 @@ export class AuthService {
       email: email,
       password: password,
       returnSecureToken: true
-    }).pipe(catchError(this.handleError),
+    }).pipe(
+      catchError(this.handleError),
       tap(resData => {
         this.handleAuthentication(
           resData.email,
@@ -49,7 +49,8 @@ export class AuthService {
       email: email,
       password: password,
       returnSecureToken: true
-    }).pipe(catchError(this.handleError),
+    }).pipe(
+      catchError(this.handleError),
       tap(resData => {
         this.handleAuthentication(
           resData.email,
@@ -67,8 +68,14 @@ export class AuthService {
     token: string,
     expiresIn: number
   ) {
+    //current time stamp since 1970 in ms + ms ===> back to date object
     const expirationDate = new Date(new Date().getTime() + expiresIn * 1000);
-    const user = new User(email, userId, token, expirationDate);
+    const user = new User(
+      email,
+      userId,
+      token,
+      expirationDate);
+
     this.user.next(user);
   }
 
@@ -91,6 +98,7 @@ export class AuthService {
     return throwError(errorMessage);
   }
 }
+
 
 
 /*
