@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {NgForm} from '@angular/forms'
-import {AuthService} from "./auth.service";
+import {AuthResponse, AuthService} from "./auth.service";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-auth',
@@ -26,23 +27,42 @@ export class AuthComponent {
     }
     const email = forma.value.email;
     const password = forma.value.password;
-
+    let authObservable: Observable<AuthResponse>;
 
     this.isLoading = true;
-    if(this.isLogin) {
-     //..
+    if (this.isLogin) {
+      authObservable = this.authService.login(email, password)
+      // .subscribe(resData => {
+      //   console.log(resData)
+      //   this.isLoading = false;
+      // },
+      // errorMessage => {//we subscribe to the observable  -that  moved logic to service in pipe (в пайп мы чуть подстраиваем данные)
+      //   console.log(errorMessage);
+      //   this.error = errorMessage;
+      //   this.isLoading = false;
+      // })
     } else {
-      this.authService.signup(email, password)
-        .subscribe(resData => {
-            console.log(resData)
-            this.isLoading = false;
-          },
-          errorMessage => {//we subscribe to the observable  -that  moved logic to service in pipe (в пайп мы чуть подстраиваем данные)
-            console.log(errorMessage);
-            this.error = errorMessage;
-            this.isLoading = false;
-          })
+      authObservable = this.authService.signup(email, password)
+      // .subscribe(resData => {
+      //     console.log(resData)
+      //     this.isLoading = false;
+      //   },
+      //   errorMessage => {//we subscribe to the observable  -that  moved logic to service in pipe (в пайп мы чуть подстраиваем данные)
+      //     console.log(errorMessage);
+      //     this.error = errorMessage;
+      //     this.isLoading = false;
+      //   })
     }
+
+    authObservable.subscribe(resData => {
+        console.log(resData)
+        this.isLoading = false;
+      },
+      errorMessage => {//we subscribe to the observable  -that  moved logic to service in pipe (в пайп мы чуть подстраиваем данные)
+        console.log(errorMessage);
+        this.error = errorMessage;
+        this.isLoading = false;
+      })
     forma.reset();
   }
 }
