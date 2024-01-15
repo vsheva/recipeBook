@@ -2,25 +2,27 @@ import {Injectable} from "@angular/core";
 
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {catchError, tap} from "rxjs/operators";
-import {Subject, throwError} from "rxjs";
+import {BehaviorSubject, Subject, throwError} from "rxjs";
 import {User} from "./user.model";
 
-export interface AuthResponseData{
-  idToken:string,
-  email:string,
-  refreshToken:string,
-  expiresIn:string,
-  localId:string,
+export interface AuthResponseData {
+  idToken: string,
+  email: string,
+  refreshToken: string,
+  expiresIn: string,
+  localId: string,
   registered?: boolean
 }
 
 
-@Injectable({providedIn:"root"})
+@Injectable({providedIn: "root"})
 
 export class AuthService {
-  user = new Subject<User>();
+  user = new BehaviorSubject<User>(null);
 
-  constructor(private http: HttpClient) {}
+
+  constructor(private http: HttpClient) {
+  }
 
 //pipe(catchError((errorRes) => {  //move logic form auth.component.ts to this observable (в пайп мы чуть подстраиваем данные)
 
@@ -86,7 +88,7 @@ export class AuthService {
         break;
     }
     return throwError(errorMessage);
-}
+  }
 }
 
 
