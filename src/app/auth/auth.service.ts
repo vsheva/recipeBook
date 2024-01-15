@@ -6,6 +6,7 @@ import {BehaviorSubject, Subject, throwError} from "rxjs";
 import {User} from "./user.model";
 
 export interface AuthResponseData {
+  kind: string;
   idToken: string,
   email: string,
   refreshToken: string,
