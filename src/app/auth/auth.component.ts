@@ -36,7 +36,7 @@ export class AuthComponent {
     } else {
       authObservable = this.authService.signup(email, password)
     }
-//subscribe
+//!!subscribe
     authObservable.subscribe(resData => {
         console.log(resData)
         this.isLoading = false;
