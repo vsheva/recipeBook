@@ -21,16 +21,12 @@ export class DataStorageService {
 
 //!!! token+ authentication
   fetchRecipes() {
-    return this.authService.user.pipe(
+    /*return this.authService.user.pipe(
       take(1),
-      exhaustMap(user => {
-        return this.http.get<Recipe[]>(
-          "https://ng-recipe-shopping-a1805-default-rtdb.firebaseio.com/recipes.json",
-          {
-            params: new HttpParams().set("auth", user.token) //!! adding token
-          })
-      }),
-      map(recipes => {
+      exhaustMap(user => {*/
+    return this.http.get<Recipe[]>(
+      "https://ng-recipe-shopping-a1805-default-rtdb.firebaseio.com/recipes.json",
+    ).pipe(map(recipes => {
         return recipes.map(recipe => {
           return {
             ...recipe,
@@ -40,7 +36,8 @@ export class DataStorageService {
       }),
       tap(recipes => {
         this.recipeService.setRecipes(recipes);
-      }));
+      })
+    );
 
   }
 }

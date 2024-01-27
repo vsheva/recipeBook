@@ -34,6 +34,7 @@ export class AuthService {
     }).pipe(
       catchError(this.handleError),
       tap(resData => {
+        //!! call handleAuthentication
         this.handleAuthentication(
           resData.email,
           resData.localId,
@@ -50,8 +51,9 @@ export class AuthService {
       password: password,
       returnSecureToken: true
     }).pipe(
-      catchError(this.handleError),
+      catchError(this.handleError), //!! взял снизу
       tap(resData => {
+        //!! call handleAuthentication with all the data needs
         this.handleAuthentication(
           resData.email,
           resData.localId,
@@ -62,13 +64,14 @@ export class AuthService {
     );
   }
 
+  //замена в signup/login
   private handleAuthentication(
     email: string,
     userId: string,
     token: string,
     expiresIn: number
   ) {
-    //current time stamp since 1970 in ms + ms ===> back to date object
+    //current time stamp since 1970 in ms + ms(convert in sec) ===> back to date object
     const expirationDate = new Date(new Date().getTime() + expiresIn * 1000);
     const user = new User(
       email,
@@ -76,7 +79,7 @@ export class AuthService {
       token,
       expirationDate);
 
-    this.user.next(user);
+    this.user.next(user); // we emit currently loggedIn user !!!
   }
 
   private handleError(errorRes: HttpErrorResponse) {
