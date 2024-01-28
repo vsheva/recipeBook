@@ -1,10 +1,7 @@
-//"styles": [
-//               "src/styles.css"
-//             ],
+import {Component, OnInit} from '@angular/core';
 
-import { Component } from '@angular/core';
-import {RecipeService} from "./recipes/recipe.service";
 import {ShoppingListService} from "./shopping-list/shoppig-list.service";
+import {AuthService} from "./auth/auth.service";
 
 @Component({
   selector: 'app-root',
@@ -12,11 +9,12 @@ import {ShoppingListService} from "./shopping-list/shoppig-list.service";
   styleUrls: ['./app.component.css'],
   providers: [ShoppingListService]
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
+  constructor(private authService: AuthService) {}
 
-/* loadedFeater = "recipe";
 
-  onNavigate(feature: string) {
-this.loadedFeater = feature;
-  }*/
+  ngOnInit() {
+this.authService.autologin()
+}
+
 }
