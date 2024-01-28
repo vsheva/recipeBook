@@ -21,6 +21,7 @@ export interface AuthResponseData {
 
 export class AuthService {
   user = new BehaviorSubject<User>(null);
+  private tokenExpirationTimer: any;
 
   //token: string= null
 
@@ -86,15 +87,32 @@ export class AuthService {
       new Date(userData._tokenExpirationDate)
     );
 
- if(loadedUser.token) {
-   this.user.next(loadedUser);
- }
+    if (loadedUser.token) {
+      this.user.next(loadedUser);
+      //tokenExparation, wrapping  in a Date -in ms (which we get by calling gerRime) minus the current timeStamp (wchich we get with new Date) in ms
+      const expirationDuration = new Date(userData._tokenExpirationDate).getTime() - new Date().getTime();
+      this.autoLogout(expirationDuration);
+    }
 
   }
 
   logout() {
     this.user.next(null);
     this.router.navigate(['/auth']);
+    localStorage.removeItem("userData"); // clear localStorage!!
+
+    //clear timeOut
+    if (this.tokenExpirationTimer) {
+      clearTimeout(this.tokenExpirationTimer)
+    }
+    this.tokenExpirationTimer = null
+  }
+
+  autoLogout(expirationDuration: number) {
+    console.log(expirationDuration);
+    this.tokenExpirationTimer = setTimeout(() => {
+      this.logout()
+    }, expirationDuration)
   }
 
   //замена в signup/login
@@ -113,6 +131,7 @@ export class AuthService {
       expirationDate);
 
     this.user.next(user); // we emit currently loggedIn user !!!
+    this.autoLogout(expiresIn * 1000);
     //save to lacalStorage
     localStorage.setItem("userData", JSON.stringify(user))
 
