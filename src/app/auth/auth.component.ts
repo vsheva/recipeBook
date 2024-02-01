@@ -1,9 +1,10 @@
-import {Component, ComponentFactoryResolver} from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import {NgForm} from '@angular/forms'
 import {AuthResponseData, AuthService} from "./auth.service";
 import {Observable} from "rxjs";
 import {Router} from "@angular/router";
-import {AlertComponent} from "../shared/alert/alert.component";
+import {AlertComponent} from "../shared/alert/alert.component";//!
+import {PlaceholderDirective} from "../shared/placeholder/placeholder.directive";
 
 @Component({
   selector: 'app-auth',
@@ -15,11 +16,14 @@ export class AuthComponent {
   isLoginMode = true;
   isLoading = false;
   error: string = null;
+  //add Placeholder as type
+  //we get access to that directive PlaceHolder and we store it in variable alertHost
+  @ViewChild(PlaceholderDirective, {static: false}) alertHost: PlaceholderDirective; //for placeholder
 
   constructor(private authService: AuthService,
               private router: Router,
-              private componentFactoryResolver: ComponentFactoryResolver
-              ) {}
+  ) {
+  }
 
   onSwitchMode() {
     this.isLoginMode = !this.isLoginMode
@@ -59,8 +63,11 @@ export class AuthComponent {
   }
 
   private showErrorAlert(message: string) {
-  //const alertCmp = new AlertComponent()
-   const alertCmpFactory= this.componentFactoryResolver.resolveComponentFactory(AlertComponent);
+    const hostViewContainerRef = this.alertHost.viewContainerRef;//!! we create helper directive Placeholder и помещаем его в auth.html  - which automatically gives us access to reference to a pounter at the place where this directive is then used
+   //this allow us to get info about the place where we use that directive: not just coordinates, but ViewContainerRef can create component in that place, where it sits
+   //we get access to the place where derective is added to and can add component there
+    hostViewContainerRef.clear();
+    hostViewContainerRef.createComponent(AlertComponent); //!!!
   }
 }
 
