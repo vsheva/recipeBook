@@ -1,7 +1,7 @@
-import {Component, ViewChild} from '@angular/core';
+import {Component, OnDestroy, ViewChild} from '@angular/core';
 import {NgForm} from '@angular/forms'
 import {AuthResponseData, AuthService} from "./auth.service";
-import {Observable} from "rxjs";
+import {Observable, Subscription} from "rxjs";
 import {Router} from "@angular/router";
 import {AlertComponent} from "../shared/alert/alert.component";//!
 import {PlaceholderDirective} from "../shared/placeholder/placeholder.directive";
@@ -12,13 +12,15 @@ import {PlaceholderDirective} from "../shared/placeholder/placeholder.directive"
 })
 
 
-export class AuthComponent {
+export class AuthComponent implements OnDestroy {
   isLoginMode = true;
   isLoading = false;
   error: string = null;
   //add Placeholder as type
   //we get access to that directive PlaceHolder and we store it in variable alertHost
   @ViewChild(PlaceholderDirective, {static: false}) alertHost: PlaceholderDirective; //for placeholder
+
+  private closeSub: Subscription;
 
   constructor(private authService: AuthService,
               private router: Router,
@@ -62,13 +64,27 @@ export class AuthComponent {
     this.error = null;
   }
 
+  ngOnDestroy() {
+    if(this.closeSub) {
+      this.closeSub.unsubscribe();
+    }
+  }
+
   private showErrorAlert(message: string) {
     const hostViewContainerRef = this.alertHost.viewContainerRef;//!! we create helper directive Placeholder и помещаем его в auth.html  - which automatically gives us access to reference to a pounter at the place where this directive is then used
    //this allow us to get info about the place where we use that directive: not just coordinates, but ViewContainerRef can create component in that place, where it sits
    //we get access to the place where derective is added to and can add component there
     hostViewContainerRef.clear();
-    hostViewContainerRef.createComponent(AlertComponent); //!!!
+    const componentRef = hostViewContainerRef.createComponent(AlertComponent); //!!!
+
+    componentRef.instance.message = message;
+    //close is EventEmitter
+    this.closeSub= componentRef.instance.close.subscribe(()=>{
+     this.closeSub.unsubscribe();
+      hostViewContainerRef.clear();
+    });
   }
+
 }
 
 
