@@ -75,6 +75,7 @@ export class AuthComponent implements OnDestroy {
    //this allow us to get info about the place where we use that directive: not just coordinates, but ViewContainerRef can create component in that place, where it sits
    //we get access to the place where derective is added to and can add component there
     hostViewContainerRef.clear();
+
     const componentRef = hostViewContainerRef.createComponent(AlertComponent); //!!!
 
     componentRef.instance.message = message;
