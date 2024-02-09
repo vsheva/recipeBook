@@ -9,7 +9,7 @@ import {AuthInterceptorService} from "./auth/auth-interceptor.service";
     ShoppingListService,
     RecipeService,
     {
-      provide: HTTP_INTERCEPTORS,//!!
+      provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptorService,
       multi: true
     }

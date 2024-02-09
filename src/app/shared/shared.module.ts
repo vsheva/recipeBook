@@ -22,6 +22,6 @@ import {CommonModule} from "@angular/common";
     DropdownDirective,
     CommonModule
   ],
-  //entryComponents: [AlertComponent]
+
 })
 export class SharedModule {}
