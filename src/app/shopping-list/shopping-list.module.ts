@@ -14,7 +14,7 @@ declarations: [
   imports:[
     FormsModule,
     RouterModule.forChild([
-      {path: 'shopping-list', component: ShoppingListComponent},//new вложенный модуль (как в recipes)
+      {path: '', component: ShoppingListComponent},//new вложенный модуль (как в recipes)
     ]),
     SharedModule
   ]
