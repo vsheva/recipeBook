@@ -1,4 +1,4 @@
-## [RecipeAndShopping](https://ng-recipe-shopping-a1805.web.app/auth)
+## [Recipe Book](https://ng-recipe-shopping-a1805.web.app/auth)
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.8.
 
