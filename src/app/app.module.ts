@@ -13,8 +13,6 @@ import {LoggingService} from "./logging.service";
   declarations: [
     AppComponent,
     HeaderComponent,
-
-    // DropdownDirective, //!!!no dublicate - we have it in shared.module
   ],
   imports: [
     BrowserModule,
@@ -24,7 +22,6 @@ import {LoggingService} from "./logging.service";
     CoreModule, //!
   ],
   bootstrap: [AppComponent],
-  //providers:[LoggingService]
 })
 export class AppModule {
 }

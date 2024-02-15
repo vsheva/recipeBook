@@ -79,7 +79,6 @@ export class AuthComponent implements OnDestroy {
     const componentRef = hostViewContainerRef.createComponent(AlertComponent); //!!!
 
     componentRef.instance.message = message;
-    //close is EventEmitter
     this.closeSub= componentRef.instance.close.subscribe(()=>{
      this.closeSub.unsubscribe();
       hostViewContainerRef.clear();
