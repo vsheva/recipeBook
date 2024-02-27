@@ -8,6 +8,7 @@ import { HttpClientModule} from "@angular/common/http";
 import {SharedModule} from "./shared/shared.module";
 import {CoreModule} from "./core.module";
 import {LoggingService} from "./logging.service";
+import { StoreModule } from '@ngrx/store';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import {LoggingService} from "./logging.service";
     AppRoutingModule,//!
     HttpClientModule,
     SharedModule,
-    CoreModule, //!
+    CoreModule,
+    StoreModule.forRoot({}, {}), //!
   ],
   bootstrap: [AppComponent],
 })
