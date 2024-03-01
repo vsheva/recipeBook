@@ -1,6 +1,7 @@
 import {Ingredient} from "../../shared/ingredient.model";
 //import {ADD_INGREDIENT} from './shopping-list.actions';
 import * as ShoppingListActions from './shopping-list.actions';
+import {AddIngredient} from "./shopping-list.actions";
 
 
 const initialState = {
@@ -10,13 +11,16 @@ const initialState = {
   ]
 };
 
-export function shoppingListReducer(state = initialState, action: ShoppingListActions.AddIngredient) {
+export function shoppingListReducer(
+  state = initialState,
+  action: ShoppingListActions.AddIngredient) {
   switch (action.type) {
     case ShoppingListActions.ADD_INGREDIENT:
       //state.ingredients.push();
       return {
         ...state,
         ingredients: [...state.ingredients, action.payload]
+
       }
   }
 }

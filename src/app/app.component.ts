@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 
-import {ShoppingListService} from "./shopping-list/shoppig-list.service";
+import {ShoppingListService} from "./shopping-list/shopping-list.service";
 import {AuthService} from "./auth/auth.service";
 import {LoggingService} from "./logging.service";
 
