@@ -32,4 +32,8 @@ export class DeleteIngredient implements Action {
   constructor(public payload: number) {}
 }
 
-export type ShoppingListActions =  AddIngredient | AddIngredients | UpdateIngredient | DeleteIngredient
+export type ShoppingListActions =
+  AddIngredient
+  | AddIngredients
+  | UpdateIngredient
+  | DeleteIngredient;
