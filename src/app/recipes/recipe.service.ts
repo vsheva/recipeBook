@@ -1,8 +1,6 @@
 import {EventEmitter, Injectable} from "@angular/core";
 import {Recipe} from "./recipe.model";
 import {Ingredient} from "../shared/ingredient.model";
-import {ShoppingListService} from "../shopping-list/shopping-list.service";
-import {RecipeDetailComponent} from "./recipe-detail/recipe-detail.component";
 import {Subject} from "rxjs";
 import {Store} from "@ngrx/store";
 import * as ShoppingListActions from '../shopping-list/store/shopping-list.actions';
@@ -11,7 +9,8 @@ import * as fromShoppingList from '../shopping-list/store/shopping-list.reducer'
 
 @Injectable()
 export class RecipeService {
-  recipeChanged = new Subject<Recipe[]>();  //Event because this recipe difer with recipe in component--> and we should pass this event
+  recipeChanged = new Subject<Recipe[]>();
+  //Event because this recipe difer with recipe in component--> and we should pass this event
   //recipeSelected = new EventEmitter<Recipe>()
   //recipeSelected = new Subject<Recipe>();???
 
@@ -40,13 +39,12 @@ export class RecipeService {
 
   private recipes: Recipe[] = [];
 
-  constructor(private shoppingListService: ShoppingListService,
-              private store: Store<fromShoppingList.AppState>) {
+  constructor(private store: Store<fromShoppingList.AppState>) {
   }
+
   setRecipes(recipes: Recipe[]) {
     this.recipes = recipes;
     this.recipeChanged.next(this.recipes.slice()) //!!!!! передаем recipes через субьект в компонет recipe-list через переменную recipeChanged, точнее копию его !!!
-
   }
 
   getRecipes() {
