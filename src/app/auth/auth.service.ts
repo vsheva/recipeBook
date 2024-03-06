@@ -6,6 +6,9 @@ import {BehaviorSubject, Subject, throwError} from "rxjs";
 import {User} from "./user.model";
 import {Router} from "@angular/router";
 import {environment} from "../../environments/environment";
+import {Store} from "@ngrx/store";
+import * as fromApp from '../store/app.reducer';
+import * as AuthActions from "./store/auth.actions";
 
 export interface AuthResponseData {
   kind: string;
@@ -27,7 +30,8 @@ export class AuthService {
   //token: string= null
 
   constructor(private http: HttpClient,
-              private router: Router) {
+              private router: Router,
+              private store: Store<fromApp.AppState>) {
   }
 
 //pipe(catchError((errorRes) => {  //move logic form auth.component.ts to this observable (в пайп мы чуть подстраиваем данные)
@@ -90,7 +94,14 @@ export class AuthService {
     );
 
     if (loadedUser.token) {
-      this.user.next(loadedUser);
+     // this.user.next(loadedUser);
+      this.store.dispatch(new AuthActions.Login({
+        email: loadedUser.email,
+        userId: loadedUser.id,
+        token: loadedUser.token,
+        expirationDate: new Date(userData._tokenExpirationDate)
+
+      }))
       //tokenExparation, wrapping  in a Date -in ms (which we get by calling getTime) minus the current timeStamp (wchich we get with new Date) in ms
       const expirationDuration = new Date(userData._tokenExpirationDate).getTime() - new Date().getTime();
       this.autoLogout(expirationDuration);
@@ -99,11 +110,11 @@ export class AuthService {
   }
 
   logout() {
-    this.user.next(null);
+    //this.user.next(null);
+    this.store.dispatch(new AuthActions.Logout());
     this.router.navigate(['/auth']);
     localStorage.removeItem("userData"); // clear localStorage!!
 
-    //clear timeOut
     if (this.tokenExpirationTimer) {
       clearTimeout(this.tokenExpirationTimer)
     }
@@ -126,13 +137,17 @@ export class AuthService {
   ) {
     //current time stamp since 1970 in ms + ms(convert in sec) ===> back to date object
     const expirationDate = new Date(new Date().getTime() + expiresIn * 1000);
-    const user = new User(
-      email,
-      userId,
-      token,
-      expirationDate);
+   // this.user.next(user); // we emit currently loggedIn user !!!
 
-    this.user.next(user); // we emit currently loggedIn user !!!
+    const user = new User(email, userId, token, expirationDate);
+
+    this.store.dispatch(new AuthActions.Login({
+      email: email,
+      userId: userId,
+      token: token,
+      expirationDate: expirationDate
+
+    }))
     this.autoLogout(expiresIn * 1000);
     //save to lacalStorage
     localStorage.setItem("userData", JSON.stringify(user))
