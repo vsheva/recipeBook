@@ -26,12 +26,22 @@ export class AuthEffects {
           password: authData.payload.password,
           returnSecureToken: true
         }
-        ).pipe(catchError((error) =>{
-        //...
-        return of();
-      }), map(resData => {
-        return of();
-      }));
+      ).pipe(
+        map(resData => {
+          //const expirationDuration = new Date(new Date().getTime() + +resData.expiresIn * 1000);
+          const expirationDate = new Date(new Date().getTime() + +resData.expiresIn * 1000);
+          return of(new AuthActions.Login({
+            email: resData.email,
+            userId: resData.localId,
+            token: resData.idToken,
+            expirationDate: expirationDate
+          }));
+        }),
+
+        catchError((error) => {
+          //...
+          return of();
+        }),);
     }),
   );
 
