@@ -21,7 +21,7 @@ import * as fromApp from './store/app.reducer'
     HttpClientModule,
     SharedModule,
     CoreModule,
-    StoreModule.forRoot(fromApp.appReducer), //!
+    StoreModule.forRoot(fromApp.appReducer),
   ],
   bootstrap: [AppComponent],
 })

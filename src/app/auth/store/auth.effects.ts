@@ -39,7 +39,7 @@ export class AuthEffects {
         }),
 
         catchError((error) => {
-          //...
+
           return of();
         }),);
     }),
