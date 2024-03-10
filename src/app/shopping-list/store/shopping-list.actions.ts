@@ -10,7 +10,6 @@ export const STOP_EDIT = '[Shopping List] Stop Edit';
 
 export class AddIngredient implements Action {
   readonly type = ADD_INGREDIENT;
-  //payload: Ingredient;
 
   constructor(public payload: Ingredient) {}
 }
