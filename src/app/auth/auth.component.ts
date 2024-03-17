@@ -76,7 +76,7 @@ export class AuthComponent implements OnDestroy {
    //we get access to the place where derective is added to and can add component
     hostViewContainerRef.clear();
 
-    const componentRef = hostViewContainerRef.createComponent(AlertComponent); /
+    const componentRef = hostViewContainerRef.createComponent(AlertComponent);
 
     componentRef.instance.message = message;
     this.closeSub= componentRef.instance.close.subscribe(()=>{
