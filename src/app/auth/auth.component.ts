@@ -73,7 +73,7 @@ export class AuthComponent implements OnDestroy {
   private showErrorAlert(message: string) {
     const hostViewContainerRef = this.alertHost.viewContainerRef;//!! we create helper directive Placeholder и помещаем его в auth.html  - which automatically gives us access to reference to a pounter at the place where this directive is then used
    //this allow us to get info about the place where we use that directive: not just coordinates, but ViewContainerRef can create component in that place, where it sits
-   //we get access to the place where derective is added to and can add component
+   //get access to the place where derective is added to and can add component
     hostViewContainerRef.clear();
 
     const componentRef = hostViewContainerRef.createComponent(AlertComponent);
